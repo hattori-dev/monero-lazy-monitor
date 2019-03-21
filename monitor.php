@@ -104,11 +104,9 @@ function NINJA()
 function refresh() {
 	//location.href = "monitor.php";
 	NINJA();
-	setTimeout(refresh, 8000);
-	
+	setTimeout(refresh, 90000);
 }
-
-setTimeout(refresh, 8000);
+setTimeout(refresh, 90000);
 
 </script>
 </head>
@@ -142,5 +140,3 @@ foreach($workers as $worker) {
 </div>
 </body>
 </html>
-
-
