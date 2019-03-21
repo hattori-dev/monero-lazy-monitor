@@ -19,7 +19,7 @@ if($_GET)
 	
 	if (($output === false) || ($output=="")) {
 		//echo  "CURL Error: " . curl_error($ch);
-		$tempObj->worker_id = $_GET["ip"];
+		$tempObj->worker_id = $_GET["id"];
 		$tempObj->hashrate["highest"] = "ERRO! " . curl_error($ch);
 		$tempObj->hashrate["total"][] = "ERRO!";
 		$tempObj->hashrate["total"][] = "ERRO!";
@@ -46,7 +46,7 @@ if($_GET)
 				$table = $doc->getElementsByTagName('table')->item(0);
 				//print_r($table);
 				if($table==false) {
-					$tempObj->worker_id = $_GET["ip"];
+					$tempObj->worker_id = $_GET["id"];
 					$tempObj->hashrate["highest"] = "ERRO! stak?" ;
 					$tempObj->hashrate["total"][] = "ERRO!";
 					$tempObj->hashrate["total"][] = "ERRO!";
