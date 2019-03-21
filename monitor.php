@@ -115,7 +115,7 @@ setTimeout(refresh, 90000);
 <?php
 if($result==""){
 ?>
-	<form action="monitor.php" method="post">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 	IP: <input type="text" name="ip">&nbsp;&nbsp;&nbsp;
 	Port: <input type="text" name="port">&nbsp;&nbsp;&nbsp;
 	<select name="soft">
