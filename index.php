@@ -2,10 +2,10 @@
 $result="";
 if(isset($_POST["ip"]))
 {
-	if(($_POST["ip"]=="") || ($_POST["port"]=="") || ($_POST["port"]=="")) { $result = "Erro há campos em branco\n"; }
+	if(($_POST["id"]=="") || ($_POST["ip"]=="") || ($_POST["port"]=="") || ($_POST["port"]=="")) { $result = "Erro há campos em branco\n"; }
 	else{
 		$file = fopen("workers.txt","a");
-		$linha = $_POST["ip"] . ":" . $_POST["port"] . ":" . $_POST["soft"] . PHP_EOL;
+		$linha = $_POST["id"] . ":" . $_POST["ip"] . ":" . $_POST["port"] . ":" . $_POST["soft"] . PHP_EOL;
 		fputs($file, $linha) ;
 		$result = "adicionado";
 	}
@@ -18,8 +18,8 @@ $file = fopen("workers.txt","r");
 while ($tempStr=fgets($file)){
 	$tempStr=rtrim($tempStr);
 	$tempW = explode(":", $tempStr);
-	array_push($workers, array( "IP" => $tempW[0], "PORT" => $tempW[1], "SOFT" => $tempW[2]));
-	array_push($jsVar, "['" .$tempW[0]. "'," .$tempW[1]. ",'" .$tempW[2] . "']");
+	array_push($workers, array( "ID" => $tempW[0], "IP" => $tempW[1], "PORT" => $tempW[2], "SOFT" => $tempW[3]));
+	array_push($jsVar, "['" .$tempW[0]. "','" .$tempW[1]. "','" .$tempW[2] . "','" . $tempW[3]. "']");
 	
 };
 
@@ -65,10 +65,10 @@ function HATTORI(item)
 		if (this.readyState == 4 && this.status == 200) {
 			var bb = this.responseText;
 			//alert (bb);
-			if((item[2]=="xmrig")||(item[2]=="stak")){
+			if((item[3]=="xmrig")||(item[3]=="stak")){
 				var myObj = JSON.parse(bb);
-				var iHTML = "<td id='S"+ item[0]+"'>" + item[2] + "</td>";
-				iHTML += "<td><a href='http://" + item[0] + ":" + item[1] + (item[2]=="stak" ? "/h" : "")+ "'>" + myObj.worker_id + "</a></td>";
+				var iHTML = "<td id='S"+ item[0]+"'>" + item[3] + "</td>";
+				iHTML += "<td><a href='http://" + item[1] + ":" + item[2] + (item[3]=="stak" ? "/h" : "")+ "'>" + item[0] + "</a></td>";
 				iHTML += "<td align='right'>" + myObj.hashrate["highest"] + "</td>";
 				//iHTML += "<td align='right'>" + myObj.hashrate["total"][0] + "</td>";
 				//iHTML += "<td align='right'>" + myObj.hashrate["total"][1] + "</td>";
@@ -84,12 +84,10 @@ function HATTORI(item)
 
 		}
 	};
-	urlStr = "semi-proxy.php?ip=" + item[0] + "&port=" +  item[1] + "&soft=" + item[2];
+	urlStr = "semi-proxy.php?id="+ item[0] + "&ip=" + item[1] + "&port=" +  item[2] + "&soft=" + item[3];
 	//alert(urlStr);
 	xmlhttp.open("GET", urlStr, true);
 	xmlhttp.send();
-	
-
 }
 
 function NINJA()
@@ -102,7 +100,6 @@ function NINJA()
 //var time = new Date().getTime();
 
 function refresh() {
-	//location.href = "monitor.php";
 	NINJA();
 	setTimeout(refresh, 90000);
 }
@@ -116,6 +113,7 @@ setTimeout(refresh, 90000);
 if($result==""){
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+	ID: <input type="text" name="id">&nbsp;&nbsp;&nbsp;
 	IP: <input type="text" name="ip">&nbsp;&nbsp;&nbsp;
 	Port: <input type="text" name="port">&nbsp;&nbsp;&nbsp;
 	<select name="soft">
@@ -133,7 +131,7 @@ if($result==""){
 <?php 
 
 foreach($workers as $worker) {
-	echo "<tr id='D" . $worker["IP"] . "'><td id='S" . $worker["IP"] . "'>" . $worker["SOFT"] . "</td><td>" . $worker["IP"] . "</td><td></td><td></td><td></td><td></td></tr>";
+	echo "<tr id='D" . $worker["ID"] . "'><td id='S" . $worker["ID"] . "'>" . $worker["SOFT"] . "</td><td>" . $worker["IP"] . "</td><td></td><td></td><td></td><td></td></tr>";
 }
 ?>
 </table>
