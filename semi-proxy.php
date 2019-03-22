@@ -5,10 +5,14 @@
 // ************************************************
 if($_GET)
 {
+	$url = $_GET["ip"] . ":" . $_GET["port"] . ($_GET["soft"]=="stak" ? "/h" : "/" );
+	/*
 	switch ($_GET["soft"]) {
 		case "xmrig": $url = $_GET["ip"] . ":" . $_GET["port"] . "/"; break;
 		case "stak": $url = $_GET["ip"] . ":" . $_GET["port"] . "/h"; break;
 	}
+	*/
+	$tempObj = new \stdClass();
 	$tempObj->worker_id = $_GET["ip"];
 	
 	$ch = curl_init(); 
@@ -40,7 +44,7 @@ if($_GET)
 			if($output)
 			{
 				//tentar criar um JSON com os mesmos dados do xmrig (worker_id, hashrate[highest e totals[]])
-				libxml_use_internal_errors(true);
+				//libxml_use_internal_errors(true);
 				$doc = new DOMDocument();
 				@$doc->loadHTML($output);
 				$table = $doc->getElementsByTagName('table')->item(0);
@@ -61,6 +65,8 @@ if($_GET)
 					$th = $tr->getElementsByTagName('th');
 					switch ($th->item(0)->nodeValue) {
 						case "Thread ID" : // ignore
+							break;
+						case "H/s": // ignore
 							break;
 						case "Totals:" :
 							foreach($tr->getElementsByTagName('td') as $td)	{ $tempObj->hashrate["total"][] = $td->nodeValue; }
@@ -87,8 +93,8 @@ if($_GET)
 				
 			}
 			$output = json_encode($tempObj);
-			break;
-	}
+		break;
+	} //end switch ($_GET["soft"])
 	echo $output;
 }
 ?>
