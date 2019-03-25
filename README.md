@@ -5,23 +5,21 @@ Ahh e tal somos preguiçosos e queremos ter tudo num só sitio sem termos que no
 
 ## Requirements 
 
-+ WebServer/PHP
-    
+- WebServer/PHP
+    ```
     apt-get install apache2
-    
     apt-get install php
-
-+ cURL 
-    
+    ```
+- cURL 
+    ```
     apt-get install php-curl
-
-+ DOMDocument
-    
+    ```
+- DOMDocument
+    ```
     apt-get install libxml2-dev
-    
     apt-get install php-dom
-    
-+ Paciencia (muita)
+    ```
+- Paciencia (muita)
 
 ## Donations 
 Não preciso disto para comer, mas já bebia um cafézito!
