@@ -22,3 +22,10 @@ Ahh e tal somos preguiçosos e queremos ter tudo num só sitio sem termos que no
     apt-get install php-dom
     
 + Paciencia (muita)
+
+## Donations 
+Não preciso disto para comer, mas já bebia um cafézito!
+    
+   XMR: `49Rj5W3gK3gcTYYKZq2rnkAvTFfaQestpVWJgGbSXwneWCCRs6cxKAAF2YgNe4e7NJdjGbqUyqMwj38SQfp3V5XmAzrjMdu`
+    
+   BTC: `(brevemente) Sou tão pobre que ainda nem uma carteira vazia tenho !!`
