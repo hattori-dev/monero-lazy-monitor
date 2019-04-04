@@ -39,25 +39,29 @@ fclose($file);
 function HATTORI(item)
 {
 	var xmlhttp = new XMLHttpRequest();
-	document.getElementById("S" + item[0]).innerHTML = "<span>" +item[0] + "&nbsp;(" + item[3] + ")</span><br><span class='highestHashrate'>...loading...</span>"; 
+	document.getElementById("rd" + item[0]).innerHTML = "<td colspan=2 class='threadData'><span class='threadData'>...loading...</span></td>"
+	//document.getElementById("S" + item[0]).innerHTML = "<span>" +item[0] + "&nbsp;(" + item[3] + ")</span>&nbsp;|&nbsp;<span class='highestHashrate'>...loading...</span>"; 
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var bb = this.responseText;
 			if((item[3]=="xmrig")||(item[3]=="stak")){
 				var myObj = JSON.parse(bb);
-				var iHTML = "<td class='workerID' id='S"+ item[0]+"'><span>" +item[0] + "&nbsp;(" + item[3] + ")</span><br>";
-				iHTML += "<span class='highestHashrate'>" + myObj.hashrate["highest"] + "</span></td>";
-				iHTML += "<td class='totalHashrate'>" + myObj.hashrate["total"][2] + "</td>";
-				iHTML += "<div>";
+				var rtHTML = " "; //rowTitle
+				var rdHTML = " "; //roeData
+				rtHTML += "<td colspan=2 class='workerID' id='S"+ item[0]+"'>&nbsp;&nbsp;&nbsp;<span>" +item[0] + "&nbsp;(" + item[3] + ")&nbsp;&nbsp;|&nbsp;&nbsp;Highest</span>&nbsp;<span class='highestHashrate'>[" + myObj.hashrate["highest"] + "]</span></td>";
+				rdHTML += "<td class='totalHashrate'>" + myObj.hashrate["total"][2] + "</td>";
+				rdHTML += "<td class='threadData'><div>";
+				
 				var threads = myObj.hashrate["threads"];
 				if(threads)	threads.forEach(function(item) {
-						iHTML += "<span class='thread'>" + item[2] + "</span>";
+						rdHTML += "<span class='thread'>" + item[2] + "</span>";
 					});
-				iHTML += "</div>";
+				rdHTML += "</div></td>"; 
 			}else{
 				iHTML = bb;
 			}
-			document.getElementById("D" + item[0]).innerHTML = iHTML; 
+			document.getElementById("rt" + item[0]).innerHTML = rtHTML; 
+			document.getElementById("rd" + item[0]).innerHTML = rdHTML; 
 		}
 	};
 	urlStr = "semi-proxy.php?id="+ item[0] + "&ip=" + item[1] + "&port=" +  item[2] + "&soft=" + item[3];
@@ -103,17 +107,20 @@ if($result==""){
 ?>
 <div class='mainwrapper'>
 <table>
+<!--  
 	<tr class="rowTitle">
-		<th><span>ID (soft)</span><br><span>Highest</span></th>
-		<th>Total<br>Hashrate</th>
-		<th>Threads</th>
+		<th colspan=2><span>WorkerID (software)</span>&nbsp;<span>Highest-Hashrate</span></th>
 	</tr>
+-->
 <?php 
 foreach($workers as $worker) {
-	echo "<tr class='rowTitle' id='D" . $worker["ID"] . "'>";
-	echo "<td class='workerID' id='S" . $worker["ID"] . "'><span>" . $worker["ID"] . "&nbsp;(". $worker["SOFT"]. ")</span><br><span class='highestHashrate'>&nbsp0&nbsp</span></td>";
+	echo "<tr class='rowTitle' id='rt" . $worker["ID"] . "'>";
+	echo "<td colspan=2 class='workerID' id='S" . $worker["ID"] . "'><span>" . $worker["ID"] . "&nbsp;(". $worker["SOFT"]. ") &nbsp;|&nbsp;Highest ->&nbsp;</span>&nbsp;<span class='highestHashrate'>&nbsp0&nbsp</span></td>";
+	echo "</tr>";
+	echo "<tr class='rowData' id='rd" . $worker["ID"]. "'>";
 	echo "<td class='totalHashrate'>&nbsp;0&nbsp;</td>";
 	echo "<td class='threadData'><div>&nbsp;</div></td>";
+	echo "</tr>";
 }
 ?>
 </table>
