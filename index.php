@@ -39,7 +39,7 @@ fclose($file);
 function HATTORI(item)
 {
 	var xmlhttp = new XMLHttpRequest();
-	document.getElementById("rd" + item[0]).innerHTML = "<td colspan=2 class='threadData'><span class='threadData'>...loading...</span></td>"
+	document.getElementById("rd" + item[0]).innerHTML = "<td class='threadData'><span class='threadData'>...loading...</span></td>"
 	//document.getElementById("S" + item[0]).innerHTML = "<span>" +item[0] + "&nbsp;(" + item[3] + ")</span>&nbsp;|&nbsp;<span class='highestHashrate'>...loading...</span>"; 
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
@@ -48,10 +48,12 @@ function HATTORI(item)
 				var myObj = JSON.parse(bb);
 				var rtHTML = " "; //rowTitle
 				var rdHTML = " "; //roeData
-				rtHTML += "<td colspan=2 class='workerID' id='S"+ item[0]+"'>&nbsp;&nbsp;&nbsp;<span>" +item[0] + "&nbsp;(" + item[3] + ")&nbsp;&nbsp;|&nbsp;&nbsp;Highest</span>&nbsp;<span class='highestHashrate'>[" + myObj.hashrate["highest"] + "]</span></td>";
-				rdHTML += "<td class='totalHashrate'>" + myObj.hashrate["total"][2] + "</td>";
+				rtHTML += "<td class='workerID' id='S"+ item[0]+"'>";
+				rtHTML += "<span>" +item[0] + "&nbsp;(" + item[3] + ")&nbsp;";
+				rtHTML += "<span class='totalHashrate'>" + myObj.hashrate["total"][2] + "</span>";
+				rtHTML += "<span class='highestHashrate'>(" + myObj.hashrate["highest"] + ")</span>";
+				rtHTML += "</td>";
 				rdHTML += "<td class='threadData'><div>";
-				
 				var threads = myObj.hashrate["threads"];
 				if(threads)	threads.forEach(function(item) {
 						rdHTML += "<span class='thread'>" + item[2] + "</span>";
@@ -107,18 +109,20 @@ if($result==""){
 ?>
 <div class='mainwrapper'>
 <table>
-<!--  
 	<tr class="rowTitle">
-		<th colspan=2><span>WorkerID (software)</span>&nbsp;<span>Highest-Hashrate</span></th>
+		<th ><span>WorkerID (soft)</span><span class="totalHashrate">Total</span><span class="highestHashrate">(Highest)</span></th>
 	</tr>
--->
 <?php 
 foreach($workers as $worker) {
 	echo "<tr class='rowTitle' id='rt" . $worker["ID"] . "'>";
-	echo "<td colspan=2 class='workerID' id='S" . $worker["ID"] . "'><span>" . $worker["ID"] . "&nbsp;(". $worker["SOFT"]. ") &nbsp;|&nbsp;Highest ->&nbsp;</span>&nbsp;<span class='highestHashrate'>&nbsp0&nbsp</span></td>";
+	echo "<td class='workerID' id='S" . $worker["ID"] . "'>";
+	echo "<span>" . $worker["ID"] . "&nbsp;(". $worker["SOFT"]. ")</span>";
+	echo "<span class='totalHashrate'>&nbsp0&nbsp</span>";
+	echo "<span class='highestHashrate'>(&nbsp0&nbsp)</span>";
+	echo "</td>";
 	echo "</tr>";
 	echo "<tr class='rowData' id='rd" . $worker["ID"]. "'>";
-	echo "<td class='totalHashrate'>&nbsp;0&nbsp;</td>";
+	//echo "<td class='totalHashrate'>&nbsp;0&nbsp;</td>";
 	echo "<td class='threadData'><div>&nbsp;</div></td>";
 	echo "</tr>";
 }
