@@ -14,6 +14,6 @@ $newConfigDataJSON = json_encode($newConfigDataArr, JSON_PRETTY_PRINT);
 echo "<hr><pre>";
 echo $newConfigDataJSON;
 echo "</pre><hr>";
-file_put_contents("aconfig.json", $newConfigDataJSON);
+file_put_contents("config.json", $newConfigDataJSON);
 echo "config.json criado";
 ?>
