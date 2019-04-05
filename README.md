@@ -1,10 +1,6 @@
-# monero-lazy-monitor
-
+# Monero-Lazy-Monitor
 Ahh e tal somos preguiçosos e queremos ter tudo num só sitio sem termos que nos chatear muito !!!
-
-
 ## Requirements 
-
 - WebServer/PHP
     ```
     apt-get install apache2
@@ -21,6 +17,40 @@ Ahh e tal somos preguiçosos e queremos ter tudo num só sitio sem termos que no
     ```
 - Paciencia (muita)
 
+## Configuration
+Edit `config.json` file: 
+- *"refresh"*: refresh rate value in seconds
+
+- Workers
+
+| Field | Data |
+| ---: | :--- |
+| *"id"* | worker/rig ID (must be unique) |
+| *"ip"* | worker/rig IP address |
+| *"port"* | listening port |
+| *"soft"* | aceptable values "xmrig" or "stak" |
+| *"alert"* | Minimum aceptable thread hashrate, iqual or bellow this value, threads will apear in red color |
+```
+{
+    "refresh": 90,
+    "workers": [
+        {
+            "id": "RIG-ID-1",
+            "ip": "10.0.0.8",
+            "port": "8081",
+            "soft": "xmrig",
+            "alert": 0
+        },
+        {
+            "id": "RIG-ID-2",
+            "ip": "10.0.0.9",
+            "port": "5002",
+            "soft": "stak",
+            "alert": 0
+        }
+    ]
+}
+```
 ## Donations 
 Não preciso disto para comer, mas já bebia um cafézito!
     
