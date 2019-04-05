@@ -46,27 +46,7 @@ Config.json info
 | *"ip"* | worker/rig IP address |
 | *"port"* | listening port |
 | *"soft"* | aceptable values "xmrig" or "stak" |
-| *"alert"* | Minimum aceptable thread hashrate, iqual or bellow this value, threads will apear in red color |
-```
-{
-    "refresh": 90,
-    "workers": [
-        {
-            "id": "RIG-ID-1",
-            "ip": "10.0.0.8",
-            "port": "8081",
-            "soft": "xmrig",
-            "alert": 0
-        },
-        {
-            "id": "RIG-ID-2",
-            "ip": "10.0.0.9",
-            "port": "5002",
-            "soft": "stak",
-            "alert": 0
-        }
-    ]
-}
+| *"alert"* | Minimum aceptable thread hashrate, iqual or bellow this value, threads will apear in red color 
 ```
 ## Donations 
 
