@@ -11,29 +11,31 @@ So we're lazy and we want to have everything in one place without to much hassle
 On Linux(debian based):
 
 First install dependencies
-
+```
   sudo update
   sudo apt install apache2 php php-curl libxml2-dev php-dom
-
+```
 Clone the repository
-
+```
   git clone https://github.com/hattori-dev/monero-lazy-monitor/
   cd monero-lazy-monitor
-
+```
 Edit workers.txt and generate config.json
-
+```
   nano workers.txt 
   php update.php
-
+```
 Copy files to Apache web server dir
-
+```
   cp * /var/www/html
-
+```
 Edit `config.json` file: 
-
+```
   cd /var/www/html
   nano config.json
-
+```
+Config.json info
+```
 - *"refresh"*: refresh rate value in seconds
 
 - Workers
@@ -45,7 +47,7 @@ Edit `config.json` file:
 | *"port"* | listening port |
 | *"soft"* | aceptable values "xmrig" or "stak" |
 | *"alert"* | Minimum aceptable thread hashrate, iqual or bellow this value, threads will apear in red color |
-
+```
 {
     "refresh": 90,
     "workers": [
@@ -65,11 +67,12 @@ Edit `config.json` file:
         }
     ]
 }
-
+```
 ## Donations 
 
 I don't need this to eat, but I could use some coffee
-    
+```    
    XMR: `49Rj5W3gK3gcTYYKZq2rnkAvTFfaQestpVWJgGbSXwneWCCRs6cxKAAF2YgNe4e7NJdjGbqUyqMwj38SQfp3V5XmAzrjMdu`
     
    BTC: `(Soon) I'm so poor I don't even have an empty wallet !!`
+```
