@@ -101,7 +101,7 @@ setTimeout(refresh, <?php echo $refresh; ?>);
 </head>
 <body onload="NINJA()">
 <?php /*
-<h3>Monitor para pregui&ccedil;osos</h3>
+<h3>Rig Farm Monitor for lazy people</h3>
 <?php
 if($result==""){
 ?>

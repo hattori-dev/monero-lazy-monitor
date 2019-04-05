@@ -1,7 +1,7 @@
 <?php 
 // ************************************************
 // *  FILENAME : semi-proxy.php
-// *  (intermediario que vai recolher os dados)
+// *  (simple Data fetcher)
 // ************************************************
 if($_GET)
 {
@@ -18,11 +18,11 @@ if($_GET)
 	
 	if (($output === false) || ($output=="")) {
 		$tempObj->worker_id = $_GET["id"];
-		$tempObj->hashrate["highest"] = "ERRO!";
-		$tempObj->hashrate["total"][] = "ERRO!";
-		$tempObj->hashrate["total"][] = "ERRO!";
-		$tempObj->hashrate["total"][] = "ERRO!";
-		$tempObj->hashrate["threads"][0][2] = "ERRO! " . curl_error($ch);
+		$tempObj->hashrate["highest"] = "ERROR!";
+		$tempObj->hashrate["total"][] = "ERROR!";
+		$tempObj->hashrate["total"][] = "ERROR!";
+		$tempObj->hashrate["total"][] = "ERROR!";
+		$tempObj->hashrate["threads"][0][2] = "ERROR! " . curl_error($ch);
 		$output = json_encode($tempObj);
 		die($output);
 	}
