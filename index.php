@@ -15,19 +15,31 @@ if(isset($_POST["ip"]))
 */
 $workers = array();
 $jsVar=array();
+
+
+$strJSON = file_get_contents("config.json");
+$configData = json_decode($strJSON, true);
+
+$workers = $configData["workers"];
+$refresh = $configData["refresh"] * 1000;
+
+foreach($workers as $tempW)
+{
+	array_push($jsVar, "['" .$tempW['id']. "','" .$tempW['ip']. "','" .$tempW['port'] . "','" . $tempW['soft']. "','" . $tempW['alert'] . "']");
+}
+$tempStr=implode(",", $jsVar);
+$jsVarWorkers="[" . $tempStr . "]";
+/*
 $file = fopen("workers.txt","r");
 while ($tempStr=fgets($file)){
 	$tempStr=rtrim($tempStr);
 	$tempW = explode(":", $tempStr);
 	array_push($workers, array( "ID" => $tempW[0], "IP" => $tempW[1], "PORT" => $tempW[2], "SOFT" => $tempW[3]));
 	array_push($jsVar, "['" .$tempW[0]. "','" .$tempW[1]. "','" .$tempW[2] . "','" . $tempW[3]. "']");
-	
 };
 
-$tempStr=implode(",", $jsVar);
-$jsVarWorkers="[" . $tempStr . "]";
 fclose($file);
-
+*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -55,8 +67,10 @@ function HATTORI(item)
 				rtHTML += "</td>";
 				rdHTML += "<td class='threadData'><div>";
 				var threads = myObj.hashrate["threads"];
-				if(threads)	threads.forEach(function(item) {
-						rdHTML += "<span class='thread'>" + item[2] + "</span>";
+				if(threads)	threads.forEach(function(threadItem) {
+						var red="";
+						if((threadItem[2]<=item[4]) || (myObj.hashrate["highest"]=="ERRO!")) red=" red";
+						rdHTML += "<span class='thread" + red  + "'>" + threadItem[2] + "</span>";
 					});
 				rdHTML += "</div></td>"; 
 			}else{
@@ -79,9 +93,9 @@ function NINJA()
 
 function refresh() {
 	NINJA();
-	setTimeout(refresh, 90000);
+	setTimeout(refresh, <?php echo $refresh; ?>);
 }
-setTimeout(refresh, 90000);
+setTimeout(refresh, <?php echo $refresh; ?>);
 
 </script>
 </head>
@@ -114,14 +128,14 @@ if($result==""){
 	</tr>
 <?php 
 foreach($workers as $worker) {
-	echo "<tr class='rowTitle' id='rt" . $worker["ID"] . "'>";
-	echo "<td class='workerID' id='S" . $worker["ID"] . "'>";
-	echo "<span>" . $worker["ID"] . "&nbsp;(". $worker["SOFT"]. ")</span>";
+	echo "<tr class='rowTitle' id='rt" . $worker["id"] . "'>";
+	echo "<td class='workerID' id='S" . $worker["id"] . "'>";
+	echo "<span>" . $worker["id"] . "&nbsp;(". $worker["soft"]. ")</span>";
 	echo "<span class='totalHashrate'>&nbsp0&nbsp</span>";
 	echo "<span class='highestHashrate'>(&nbsp0&nbsp)</span>";
 	echo "</td>";
 	echo "</tr>";
-	echo "<tr class='rowData' id='rd" . $worker["ID"]. "'>";
+	echo "<tr class='rowData' id='rd" . $worker["id"]. "'>";
 	//echo "<td class='totalHashrate'>&nbsp;0&nbsp;</td>";
 	echo "<td class='threadData'><div>&nbsp;</div></td>";
 	echo "</tr>";
