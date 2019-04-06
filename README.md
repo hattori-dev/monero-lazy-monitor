@@ -1,6 +1,6 @@
 # Monero-Lazy-Monitor
 
-So we're lazy and we want to have everything in one place without to much hassle !!!
+So... we're lazy and we want to have everything in one place without too much hassle !!!
 
 With this software you can monitor your mining farm workers from one single website combining Xmrig or xmr-stak built in API info into one place.
 
