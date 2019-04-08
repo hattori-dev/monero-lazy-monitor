@@ -1,24 +1,43 @@
 # Monero-Lazy-Monitor
-Ahh e tal somos preguiçosos e queremos ter tudo num só sitio sem termos que nos chatear muito !!!
+
+So... we're lazy and we want to have everything in one place without too much hassle !!!
+
+With this software you can monitor your mining farm workers from one single website combining Xmrig or xmr-stak built in API info into one place.
+
 ## Requirements 
-- WebServer/PHP
-    ```
-    apt-get install apache2
-    apt-get install php
-    ```
-- cURL 
-    ```
-    apt-get install php-curl
-    ```
-- DOMDocument
-    ```
-    apt-get install libxml2-dev
-    apt-get install php-dom
-    ```
-- Paciencia (muita)
+
+- WebServer (we will be using Apache here), PHP, DOMDocument, Curl and some patience
 
 ## Configuration
+
+On Linux(debian based):
+
+First install dependencies
+```
+  sudo update
+  sudo apt install apache2 php php-curl libxml2-dev php-dom
+```
+Clone the repository
+```
+  git clone https://github.com/hattori-dev/monero-lazy-monitor/
+  cd monero-lazy-monitor
+```
+Edit workers.txt and generate config.json
+```
+  nano workers.txt 
+  php update.php
+```
+Copy files to Apache web server dir
+```
+  cp * /var/www/html
+```
 Edit `config.json` file: 
+```
+  cd /var/www/html
+  nano config.json
+```
+Config.json info
+
 - *"refresh"*: refresh rate value in seconds
 
 - Workers
@@ -29,7 +48,7 @@ Edit `config.json` file:
 | *"ip"* | worker/rig IP address |
 | *"port"* | listening port |
 | *"soft"* | aceptable values "xmrig" or "stak" |
-| *"alert"* | Minimum aceptable thread hashrate, iqual or bellow this value, threads will apear in red color |
+| *"alert"* | Minimum aceptable thread hashrate, iqual or bellow this value, threads will apear in red color 
 ```
 {
     "refresh": 90,
@@ -52,8 +71,10 @@ Edit `config.json` file:
 }
 ```
 ## Donations 
-Não preciso disto para comer, mas já bebia um cafézito!
-    
+
+I don't need this to eat, but I could use some coffee
+```    
    XMR: `49Rj5W3gK3gcTYYKZq2rnkAvTFfaQestpVWJgGbSXwneWCCRs6cxKAAF2YgNe4e7NJdjGbqUyqMwj38SQfp3V5XmAzrjMdu`
     
-   BTC: `(brevemente) Sou tão pobre que ainda nem uma carteira vazia tenho !!`
+   BTC: `(Soon) I'm so poor I don't even have an empty wallet !!`
+```

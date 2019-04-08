@@ -15,5 +15,5 @@ echo "<hr><pre>";
 echo $newConfigDataJSON;
 echo "</pre><hr>";
 file_put_contents("config.json", $newConfigDataJSON);
-echo "config.json criado";
+echo "config.json created";
 ?>
