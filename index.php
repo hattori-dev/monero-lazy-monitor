@@ -69,7 +69,7 @@ function HATTORI(item)
 				var threads = myObj.hashrate["threads"];
 				if(threads)	threads.forEach(function(threadItem) {
 						var red="";
-						if((threadItem[2]<=item[4]) || (myObj.hashrate["highest"]=="ERRO!")) red=" red";
+						if((threadItem[2]<=item[4]) || (myObj.hashrate["highest"]=="ERROR!")) red=" red";
 						rdHTML += "<span class='thread" + red  + "'>" + threadItem[2] + "</span>";
 					});
 				rdHTML += "</div></td>"; 
