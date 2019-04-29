@@ -25,6 +25,36 @@ $jsVarWorkers="[" . $tempStr . "]";
 <link rel='stylesheet' href='style.css' />
 <meta name='viewport' content='width=device-width' />
 <script>
+function showThread(tItem, alertlimit, cssClass)
+{
+	var color="";
+	var value="";
+	var result="";
+	
+	//XMR-STAK returns null and XMRIG returns zero, so I change null to zero 
+	if(tItem[2]==null) tItem[2]=0; 
+	if(tItem[1]==null) tItem[1]=0; 
+	if(tItem[0]==null) tItem[0]=0; 
+ 
+	if (((tItem[2]==0) || (tItem[1]==0) || (tItem[0]==0)) && ((tItem[2]!=0) || (tItem[1]!=0) || (tItem[0]!=0))) {
+			color="orange";
+			if(tItem[1]!=0) value=tItem[1];
+			if(tItem[2]!=0) value=tItem[2];
+		    //result = "<span class='thread" + color  + "'>" + tItem[index] + "</span>";
+	} else {
+		if((tItem[2]<=alertlimit) || (tItem[0]=="ERROR!")) {
+			color="red";
+			value = tItem[2];
+		} else {
+		color="";
+		value= tItem[2];
+		//result = "<span class='" + cssClass + " " + color  + "'>" + value + "</span>";
+		}
+	}
+	result = "<span class='" + cssClass + " " + color  + "'>" + value + "</span>";
+	return result;
+}
+
 function HATTORI(item)
 {
 	var xmlhttp = new XMLHttpRequest();
@@ -36,19 +66,21 @@ function HATTORI(item)
 			if((item[3]=="xmrig")||(item[3]=="stak")){
 				var myObj = JSON.parse(bb);
 				var rtHTML = " "; //rowTitle
-				var rdHTML = " "; //roeData
+				var rdHTML = " "; //rowData
 
 				rtHTML += "<td class='workerID' id='S"+ item[0]+"'>";
-				rtHTML += "<span><a href='config.php?action=NONE&oldid=" + item[0] + "'>" + item[0] + "</a>&nbsp;(" + item[3] + ")&nbsp;";
-				rtHTML += "<span class='totalHashrate'>" + myObj.hashrate["total"][2] + "</span>";
+				rtHTML += "<div style='float: left;'>";
+				rtHTML += "<span><a href='http://" + item[1] + ":" + item[2] + (item[3]=="stak" ? "/h" : "")+ "'>" + item[0] + "</a>&nbsp;(" + item[3] + ")&nbsp;";
+				rtHTML += showThread(myObj.hashrate["total"], -1, "totalHashrate");
+				//rtHTML += "<span class='totalHashrate'>" + myObj.hashrate["total"][2] + "</span>";
 				rtHTML += "<span class='highestHashrate'>(" + myObj.hashrate["highest"] + ")</span>";
+				rtHTML += "</div>";
+				rtHTML += "<div style='float: right;'><span><a href='config.php?action=NONE&oldid=" + item[0] + "'>EDIT</a></span></div>";
 				rtHTML += "</td>";
 				rdHTML += "<td class='threadData'><div>";
 				var threads = myObj.hashrate["threads"];
 				if(threads)	threads.forEach(function(threadItem) {
-						var red="";
-						if((threadItem[2]<=item[4]) || (myObj.hashrate["highest"]=="ERROR!")) red=" red";
-						rdHTML += "<span class='thread" + red  + "'>" + threadItem[2] + "</span>";
+						rdHTML += showThread(threadItem, item[4], "thread");
 					});
 				rdHTML += "</div></td>"; 
 			}else{
@@ -93,9 +125,12 @@ setTimeout(refresh, <?php echo $refresh; ?>);
 foreach($workers as $worker) {
 	echo "<tr class='rowTitle' id='rt" . $worker["id"] . "'>";
 	echo "<td class='workerID' id='S" . $worker["id"] . "'>";
-	echo "  <span><a href='config.php?action=NONE&oldid=" . $worker["id"] . "'>" . $worker["id"] . "</a>&nbsp;(". $worker["soft"]. ")</span>";
-	echo "  <span class='totalHashrate'>&nbsp0&nbsp</span>";
-	echo "  <span class='highestHashrate'>(&nbsp0&nbsp)</span>";
+	echo "<div style='float: left;'>";
+	echo "  <span><a href='http://" . $worker['ip'] . ":" . $worker['port'] . ($worker['soft']=="stak" ? "/h": "") . "'>" . $worker["id"] . "</a>&nbsp;(". $worker["soft"]. ")</span>";
+	echo "  <span class='totalHashrate'>&nbsp;0&nbsp;</span>";
+	echo "  <span class='highestHashrate'>(&nbsp;0&nbsp;)</span>";
+	echo "</div>";
+	echo "<div style='float: right;'><span><a href='config.php?action=NONE&oldid=" . $worker["id"] . "'>EDIT</a></span></div>";
 	echo "</td>";
 	echo "</tr>";
 	echo "<tr class='rowData' id='rd" . $worker["id"]. "'>";
