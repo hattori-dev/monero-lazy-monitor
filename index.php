@@ -12,7 +12,16 @@ $refresh = $configData["refresh"] * 1000;
 
 foreach($workers as $tempW)
 {
-	array_push($jsVar, "['" .$tempW['id']. "','" .$tempW['ip']. "','" .$tempW['port'] . "','" . $tempW['soft']. "','" . $tempW['alert'] . "']");
+	array_push($jsVar, 	"['" 
+		. $tempW['id']. "','" 
+		. $tempW['ip']. "','" 
+		. $tempW['port'] . "','" 
+		. $tempW['soft']. "','" 
+		. $tempW['alert'] . "','" 
+		. $tempW['xmrigtoken'] . "','" 
+		. $tempW['stakuser'] . "','" 
+		. $tempW['stakpass'] 
+		. "'] ");
 }
 $tempStr=implode(",", $jsVar);
 $jsVarWorkers="[" . $tempStr . "]";
@@ -63,6 +72,7 @@ function HATTORI(item)
 	xmlhttp.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var bb = this.responseText;
+			//alert(bb);
 			if((item[3]=="xmrig")||(item[3]=="stak")){
 				var myObj = JSON.parse(bb);
 				var rtHTML = " "; //rowTitle
@@ -90,7 +100,14 @@ function HATTORI(item)
 			document.getElementById("rd" + item[0]).innerHTML = rdHTML; 
 		}
 	};
-	urlStr = "semi-proxy.php?id="+ item[0] + "&ip=" + item[1] + "&port=" +  item[2] + "&soft=" + item[3];
+	urlStr = "semi-proxy.php?id=" + item[0] 
+		+ "&ip=" + item[1] 
+		+ "&port=" +  item[2] 
+		+ "&soft=" + item[3] 
+		+ "&xmrigtoken=" + item[5]
+		+ "&stakuser=" + item[6]
+		+ "&stakpass=" + item[7]
+		;
 	xmlhttp.open("GET", urlStr, true);
 	xmlhttp.send();
 }
