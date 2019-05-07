@@ -16,10 +16,11 @@ $htmlTop .=	"</head>";
 $htmlTop .=	"<body>";
 $htmlTop .=	"<div class='mainwrapper'>";
 
-$htmlBottom  = "</table>";
-$htmlBottom .= "</div>";
+
+$htmlBottom  = "</div>";
 $htmlBottom .= "</body>";
 $htmlBottom .= "</html>";
+
 
 if(isset($_GET['action']) && isset($_GET['oldid'])) {
 	$id = urldecode($_GET['oldid']);
@@ -36,22 +37,25 @@ if(isset($_GET['action']) && isset($_GET['oldid'])) {
 					echo "<tr class='rowTitle'><td class='workerID' align='right'>ID:&nbsp;&nbsp;</td><td><input type='text' name='id' value='" . $worker["id"] . "'></td></tr>";
 					echo "<tr class='rowData'><td class='workerID' align='right'>IP:&nbsp;&nbsp;</td><td><input type='text' name='ip' value='" . $worker["ip"] . "'></td></tr>";
 					echo "<tr class='rowData'><td class='workerID' align='right'>Port:&nbsp;&nbsp;</td><td><input type='text' name='port' value='" . $worker["port"] . "'></td></tr>";
+					echo "<tr class='rowData'><td align='right'>Alert:&nbsp;&nbsp;</td><td colspan='2'><input type='text' name='alert' value='" . $worker["alert"] . "'></td></tr>";
 					echo "<tr class='rowData'><td class='workerID' align='right'>Soft:&nbsp;&nbsp;</td><td>";
 					echo "<select name='soft'>";
 					echo "	<option " . ($worker["soft"]=="xmrig" ? "selected" : "") . " value='xmrig'>xmrig</option>";
 					echo "	<option " . ($worker["soft"]=="stak" ? "selected" : "") . " value='stak'>stak</option>";
 					echo "</select></td></tr>";
-					echo "<tr class='rowData'><td align='right'>Alert:&nbsp;&nbsp;</td><td colspan='2'><input type='text' name='alert' value='" . $worker["alert"] . "'></td></tr>";
+					echo "<tr class='rowData'><td class='workerID' align='right'>XMRig Access-token:&nbsp;&nbsp;</td><td><input type='text' name='xmrigtoken' value='" . $worker["xmrigtoken"] . "'></td></tr>";
+					echo "<tr class='rowData'><td class='workerID' align='right'>STAK User:&nbsp;&nbsp;</td><td><input type='text' name='stakuser' value='" . $worker["stakuser"] . "'></td></tr>";
+					echo "<tr class='rowData'><td class='workerID' align='right'>STAK Pass:&nbsp;&nbsp;</td><td><input type='text' name='stakpass' value='" . $worker["stakpass"] . "'></td></tr>";
 					echo "<tr class='rowTitle'><td>&nbsp;</td><td align='left'>";
 					echo "<input type='submit' name='action' value='EDIT'>&nbsp;&nbsp;";
 					echo "<input type='submit' name='action' value='REMOVE'>";
 					echo "</td></tr>";
-					echo "<table>";
+					echo "</table>";
 					echo "</form>";
 					echo $htmlBottom;
 					break;
 				case "EDIT":
-					$newWorker = array("id" => $_GET["id"], "ip" => $_GET["ip"], "port" => $_GET["port"], "soft" => $_GET["soft"], "alert" => (int) $_GET["alert"]);
+					$newWorker = array("id" => $_GET["id"], "ip" => $_GET["ip"], "port" => $_GET["port"], "soft" => $_GET["soft"], "alert" => (int) $_GET["alert"], "xmrigtoken"=> $_GET["xmrigtoken"], "stakuser" => $_GET["stakuser"], "stakpass" => $_GET["stakpass"]);
 					$saveFile = true;
 					array_push($newWorkers, $newWorker);
 					break;
@@ -65,15 +69,16 @@ if(isset($_GET['action']) && isset($_GET['oldid'])) {
 			}
 		} else { array_push($newWorkers, $newWorker); }
 	}
-	
-	if($_GET['action']=='ADD') {
+	if($_GET['action']=="ADD")
+	{
 		if($id!="")
 		{
-			$newWorker = array("id" => $id, "ip" => $_GET["ip"], "port" => $_GET["port"], "soft" => $_GET["soft"], "alert" => (int) $_GET["alert"]);
+			$newWorker = array("id" => $id, "ip" => $_GET["ip"], "port" => $_GET["port"], "soft" => $_GET["soft"], "alert" => (int) $_GET["alert"], "xmrigtoken"=> $_GET["xmrigtoken"], "stakuser" => $_GET["stakuser"], "stakpass" => $_GET["stakpass"]);
 			array_push($newWorkers, $newWorker);
 			$saveFile = true;
 		} else {header('Location: index.php');}
 	}
+
 	if($saveFile)
 	{
 		$newConfigDataArr = array_merge(array('refresh'=>$refresh),array('workers'=>$newWorkers));
@@ -91,17 +96,20 @@ if(isset($_GET['action']) && isset($_GET['oldid'])) {
 	echo "<tr class='rowTitle'><td class='workerID' align='right'>ID:&nbsp;&nbsp;</td><td><input type='text' name='oldid' value=''></td></tr>";
 	echo "<tr class='rowData'><td class='workerID' align='right'>IP:&nbsp;&nbsp;</td><td><input type='text' name='ip' value=''></td></tr>";
 	echo "<tr class='rowData'><td class='workerID' align='right'>Port:&nbsp;&nbsp;</td><td><input type='text' name='port' value=''></td></tr>";
+		echo "<tr class='rowData'><td align='right'>Alert:&nbsp;&nbsp;</td><td colspan='2'><input type='text' name='alert' value=''></td></tr>";
 	echo "<tr class='rowData'><td class='workerID' align='right'>Soft:&nbsp;&nbsp;</td><td>";
 	echo "<select name='soft'>";
 	echo "	<option value='xmrig'>xmrig</option>";
 	echo "	<option value='stak'>stak</option>";
 	echo "</select></td></tr>";
-	echo "<tr class='rowData'><td align='right'>Alert:&nbsp;&nbsp;</td><td colspan='2'><input type='text' name='alert' value=''></td></tr>";
+	echo "<tr class='rowData'><td class='workerID' align='right'>XMRig Access-token:&nbsp;&nbsp;</td><td><input type='text' name='xmrigtoken' value=''></td></tr>";
+	echo "<tr class='rowData'><td class='workerID' align='right'>STAK User:&nbsp;&nbsp;</td><td><input type='text' name='stakuser' value=''></td></tr>";
+	echo "<tr class='rowData'><td class='workerID' align='right'>STAK Pass:&nbsp;&nbsp;</td><td><input type='text' name='stakpass' value=''></td></tr>";
 	echo "<tr class='rowTitle'><td>&nbsp;</td><td align='left'>";
 	echo "<input type='submit' name='action' value='ADD'>&nbsp;&nbsp;";
 	//echo "<input type='submit' name='action' value='REMOVE'>";
 	echo "</td></tr>";
-	echo "<table>";
+	echo "</table>";
 	echo "</form>";
 	echo $htmlBottom;
 }
