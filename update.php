@@ -4,7 +4,7 @@ $file = fopen("workers.txt","r");
 while ($tempStr=fgets($file)){
 	$tempStr=rtrim($tempStr);
 	$tempW = explode(":", $tempStr);
-	array_push($workers, array( "id" => $tempW[0], "ip" => $tempW[1], "port" => $tempW[2], "soft" => $tempW[3], "alert" => 0));
+	array_push($workers, array( "id" => $tempW[0], "ip" => $tempW[1], "port" => $tempW[2], "soft" => $tempW[3], "alert" => 0, "xmrigtoken" => "", "stakuser" => "", "stakpass" => ""));
 };
 fclose($file);
 
