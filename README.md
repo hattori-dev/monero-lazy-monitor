@@ -49,6 +49,9 @@ Config.json info
 | *"port"* | listening port |
 | *"soft"* | aceptable values "xmrig" or "stak" |
 | *"alert"* | Minimum aceptable thread hashrate, iqual or bellow this value, threads will apear in red color 
+| *"xmrigtoken"* | XMRig access-token (leave blank if not configured)
+| *"stakuser"* | Stak authentication user login (leave blank if not configured)
+| *"stakpass"* | Stak authentication password (leave blank if not configured)
 ```
 {
     "refresh": 90,
@@ -58,14 +61,20 @@ Config.json info
             "ip": "10.0.0.8",
             "port": "8081",
             "soft": "xmrig",
-            "alert": 0
+            "alert": 0,
+            "xmrigtoken": "",
+            "stakuser": "",
+            "stakpass": ""
         },
         {
             "id": "RIG-ID-2",
             "ip": "10.0.0.9",
             "port": "5002",
             "soft": "stak",
-            "alert": 0
+            "alert": 0,
+            "xmrigtoken": "",
+            "stakuser": "",
+            "stakpass": ""
         }
     ]
 }
