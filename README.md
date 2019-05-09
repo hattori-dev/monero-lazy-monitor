@@ -2,7 +2,7 @@
 
 So... we're lazy and we want to have everything in one place without too much hassle !!!
 
-With this software you can monitor your mining farm workers from one single website combining [xmrig](https://github.com/xmrig/xmrig) or [xmr-stak](https://github.com/fireice-uk/xmr-stak) built in API info into one place.
+With this software you can monitor your mining farm workers from one single website combining [XMRIG](https://github.com/xmrig/xmrig) or [XMR-STAK](https://github.com/fireice-uk/xmr-stak) built in API info into one place.
 
 ## Requirements 
 
