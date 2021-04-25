@@ -6,7 +6,7 @@
 if($_GET)
 {
 	$ch = curl_init();
-	$url = $_GET["ip"] . ":" . $_GET["port"] . ($_GET["soft"]=="stak" ? "/api.json" : "/" );
+	$url = $_GET["ip"] . ":" . $_GET["port"] . ($_GET["soft"]=="stak" ? "/api.json" : "/2/summary" );
 
 	$token = $_GET["xmrigtoken"];
 	$stakuser = $_GET["stakuser"];
